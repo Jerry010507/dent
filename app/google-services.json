@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "265544182360",
+    "project_id": "dent-project-96a14",
+    "storage_bucket": "dent-project-96a14.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:265544182360:android:1c15c90667721dcfe2b82d",
+        "android_client_info": {
+          "package_name": "com.kye.dent"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjlAUq-WRsn1-wEnAj9SNHrH4XO_cCjHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
