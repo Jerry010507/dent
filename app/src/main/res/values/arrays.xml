@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="category">
+        <item>정기검진</item>
+        <item>스케일링</item>
+        <item>충치치료</item>
+        <item>임플란트</item>
+        <item>교정</item>
+        <item>기타</item>
+    </string-array>
+</resources>
