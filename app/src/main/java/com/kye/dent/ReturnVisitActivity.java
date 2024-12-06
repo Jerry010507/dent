@@ -39,25 +39,31 @@ public class ReturnVisitActivity extends AppCompatActivity {
                 String birth = birthInput.getText().toString().trim();
                 String phone = phoneInput.getText().toString().trim();
 
-                if(name.isEmpty() || birth.isEmpty() || phone.isEmpty()) {
+                if (name.isEmpty() || birth.isEmpty() || phone.isEmpty()) {
                     Toast.makeText(ReturnVisitActivity.this, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                // 로그인
-                if(dbhelper.checkUser(name, birth, phone)) {
+                // 사용자 확인 및 PID 가져오기
+                int pid = dbhelper.getUserPID(name, birth, phone);
+                if (pid != -1) { // 사용자 존재 확인
+                    SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean("isLoggedIn", true);
+                    editor.putInt("pid", pid); // PID 저장
                     editor.putString("name", name);
                     editor.putString("phone", phone);
                     editor.putString("birth", birth);
                     editor.apply();
 
+                    Toast.makeText(ReturnVisitActivity.this, "재진 로그인 성공", Toast.LENGTH_SHORT).show();
+
+                    // MenuActivity로 이동
                     Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(ReturnVisitActivity.this, "일치하지 않은 정보입니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReturnVisitActivity.this, "일치하지 않는 정보입니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

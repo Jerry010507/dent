@@ -29,7 +29,7 @@
             android:layout_height="200dp"
             android:background="#C0DAFB"
             android:gravity="center"
-            android:layout_margin="30dp"
+            android:layout_marginTop="50dp"
             android:text="초진"
             android:textColor="#393939"
             android:textSize="180px"

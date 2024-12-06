@@ -45,6 +45,7 @@
         android:id="@+id/appoint_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="center"
         android:text="1.예약하기"
         android:textSize="180px" />
@@ -53,6 +54,7 @@
         android:id="@+id/appoint_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="center"
         android:text="2.예약 내역"
         android:textSize="180px" />
@@ -61,6 +63,7 @@
         android:id="@+id/treat_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="center"
         android:text="3.진료 내역"
         android:textSize="180px" />
@@ -69,6 +72,7 @@
         android:id="@+id/info_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:gravity="center"
         android:text="4.개인정보"
         android:textSize="180px" />
