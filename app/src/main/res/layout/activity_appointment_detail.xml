@@ -17,40 +17,105 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="이름 :"
-            android:textColor="#494949"
-            android:textSize="45dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/birth_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="생년월일 :"
-            android:textColor="#494949"
-            android:textSize="45dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이름 : "
+                android:textColor="#494949"
+                android:textSize="45dp" />
 
-        <TextView
-            android:id="@+id/category_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="진료유형 :"
-            android:textColor="#494949"
-            android:textSize="45dp" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="45dp"
+                android:textColor="#393939" />
 
-        <TextView
-            android:id="@+id/date_time_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="일시 :"
-            android:textColor="#494949"
-            android:textSize="45dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="생년월일 : "
+                android:textColor="#494949"
+                android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/birth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="45dp"
+                android:textColor="#393939" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전화번호 : "
+                android:textColor="#494949"
+                android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="30dp"
+                android:textColor="#393939" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="진료유형 : "
+                android:textColor="#494949"
+                android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="45dp"
+                android:textColor="#393939" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="날짜 : "
+                android:textColor="#494949"
+                android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="45dp"
+                android:textColor="#393939" />
+        </LinearLayout>
     </LinearLayout>
 
 

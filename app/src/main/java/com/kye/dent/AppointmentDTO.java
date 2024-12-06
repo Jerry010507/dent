@@ -3,16 +3,16 @@ package com.kye.dent;
 public class AppointmentDTO {
     private int appointId;
     private String phone;
-    private String Name;
+    private String name;
     private String birthDate;
     private String appointmentDate;
     private String treatmentType;
 
     // 생성자
-    public AppointmentDTO(String patientName, String birthDate, String appointmentDate, String treatmentType) {
+    public AppointmentDTO(String patientName,String phone, String birthDate, String appointmentDate, String treatmentType) {
         this.appointId = appointId;
         this.phone = phone;
-        this.Name = patientName;
+        this.name = patientName;
         this.birthDate = birthDate;
         this.appointmentDate = appointmentDate;
         this.treatmentType = treatmentType;
@@ -35,12 +35,12 @@ public class AppointmentDTO {
         this.phone = phone;
     }
 
-    public String getPatientName() {
-        return Name;
+    public String getName() {
+        return name;
     }
 
-    public void setPatientName(String patientName) {
-        this.Name = patientName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getBirthDate() {

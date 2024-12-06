@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AppointmentActivity extends AppCompatActivity {
 
     private Button appointButton, cancelButton;
-    private TextView nameText, birthText;
+    private TextView nameText, birthText, phoneText;
     private Spinner categorySpinner, yearSpinner, monthSpinner, daySpinner, hourSpinner, minuteSpinner;
     private AppointmentDBHelper dbHelper;
 
@@ -35,6 +35,7 @@ public class AppointmentActivity extends AppCompatActivity {
         cancelButton = findViewById(R.id.cancel_button);
         nameText = findViewById(R.id.name);
         birthText = findViewById(R.id.birth);
+        phoneText = findViewById(R.id.phone);
         categorySpinner = findViewById(R.id.category);
         yearSpinner = findViewById(R.id.years);
         monthSpinner = findViewById(R.id.months);
@@ -47,10 +48,12 @@ public class AppointmentActivity extends AppCompatActivity {
         if (isLoggedIn) {
             String name = sharedPreferences.getString("name", "");    // 이름 가져오기
             String birth = sharedPreferences.getString("birth", "");  // 생년월일 가져오기
+            String phone = sharedPreferences.getString("phone", "");
 
             // 사용자 정보 TextView에 설정
             nameText.setText(name);
             birthText.setText(birth);
+            phoneText.setText(phone);
         } else {
             // 로그인 정보가 없을 때 처리
             Toast.makeText(this, "로그인 정보가 없습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT).show();
@@ -121,6 +124,7 @@ public class AppointmentActivity extends AppCompatActivity {
     private void saveAppointment() {
         String name = nameText.getText().toString();
         String birth = birthText.getText().toString();
+        String phone = phoneText.getText().toString();
         String category = categorySpinner.getSelectedItem().toString();
 
         // 날짜 및 시간 문자열 조합
@@ -136,6 +140,7 @@ public class AppointmentActivity extends AppCompatActivity {
         ContentValues values = new ContentValues();
         values.put(dbHelper.COLUMN_NAME, name);
         values.put(dbHelper.COLUMN_BIRTH_DATE, birth);
+        values.put(dbHelper.COLUMN_PHONE, phone);
         values.put(dbHelper.COLUMN_TREATMENT_TYPE, category);
         values.put(dbHelper.COLUMN_APPOINTMENT_DATE, date+" "+time);
         // 데이터 삽입 시도

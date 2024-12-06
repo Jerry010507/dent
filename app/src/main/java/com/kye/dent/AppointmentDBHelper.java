@@ -53,7 +53,7 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
     public long addAppointment(AppointmentDTO appointment) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, appointment.getPatientName());
+        values.put(COLUMN_NAME, appointment.getName());
         values.put(COLUMN_BIRTH_DATE, appointment.getBirthDate());
         values.put(COLUMN_APPOINTMENT_DATE, appointment.getAppointmentDate());
         values.put(COLUMN_TREATMENT_TYPE, appointment.getTreatmentType());
@@ -73,6 +73,7 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()) {
             AppointmentDTO appointment = new AppointmentDTO(
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTH_DATE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APPOINTMENT_DATE)),
                     cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TREATMENT_TYPE))
@@ -82,7 +83,6 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
             cursor.close();
             return appointment;
         }
-
         return null;
     }
 
@@ -100,6 +100,7 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
                 AppointmentDTO appointment = new AppointmentDTO(
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTH_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APPOINTMENT_DATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TREATMENT_TYPE))
                 );
@@ -114,6 +115,33 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
         }
 
         db.close();
+        return appointments;
+    }
+
+    // 특정 사용자의 예약 내역 가져오기
+    public List<AppointmentDTO> getAppointmentsByPhone(String phone) {
+        List<AppointmentDTO> appointments = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(TABLE_APPOINTMENT, null,
+                COLUMN_PHONE + " = ?", new String[]{phone},
+                null, null, COLUMN_APPOINTMENT_DATE + " ASC");
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                AppointmentDTO appointment = new AppointmentDTO(
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTH_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_APPOINTMENT_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TREATMENT_TYPE))
+                );
+                appointment.setAppointId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_APPOINT_ID)));
+                appointment.setPhone(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)));
+                appointments.add(appointment);
+            }
+            cursor.close();
+        }
         return appointments;
     }
 }

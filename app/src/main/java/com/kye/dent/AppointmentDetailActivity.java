@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class AppointmentDetailActivity extends AppointmentActivity {
 
-    private TextView nameText, birthText, categoryText, dateTimeText;
+    private TextView nameText, birthText, phoneText, typeText, dateTimeText;
     private Button closeButton;
     private AppointmentDBHelper dbHelper;
 
@@ -18,39 +18,37 @@ public class AppointmentDetailActivity extends AppointmentActivity {
         setContentView(R.layout.activity_appointment_detail);
 
         // XML에서 각 TextView와 Button 연결
-        nameText = findViewById(R.id.name_text);
-        birthText = findViewById(R.id.birth_text);
-        categoryText = findViewById(R.id.category_text);
-        dateTimeText = findViewById(R.id.date_time_text);
+        nameText = findViewById(R.id.name);
+        birthText = findViewById(R.id.birth);
+        phoneText = findViewById(R.id.phone);
+        typeText = findViewById(R.id.type);
+        dateTimeText = findViewById(R.id.date);
         closeButton = findViewById(R.id.cancel_appointment_button);
 
         dbHelper = new AppointmentDBHelper(this);
 
-        // 예약 정보를 가져와서 각 TextView에 표시
-        Cursor cursor = dbHelper.getReadableDatabase().query(
-                AppointmentDBHelper.TABLE_APPOINTMENT,
-                null, null, null, null, null, null
-        );
+        // Intent로 전달된 예약 ID 가져오기
+        int appointId = getIntent().getIntExtra("appointId", -1);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            // 예약 정보 가져오기
-            String name = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentDBHelper.COLUMN_NAME));
-            String birth = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentDBHelper.COLUMN_BIRTH_DATE));
-            String category = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentDBHelper.COLUMN_TREATMENT_TYPE));
-            String date = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentDBHelper.COLUMN_APPOINTMENT_DATE));
+        if (appointId != -1) {
+            // DB에서 예약 정보 가져오기
+            AppointmentDTO appointment = dbHelper.getAppointment(appointId);
 
-            // TextView에 정보 설정
-            nameText.setText(name);
-            birthText.setText(birth);
-            categoryText.setText(category);
-            dateTimeText.setText(date);
-
-            cursor.close();
+            if (appointment != null) {
+                // 가져온 정보를 UI에 표시
+                nameText.setText(appointment.getName());
+                birthText.setText(appointment.getBirthDate());
+                phoneText.setText(appointment.getPhone());
+                typeText.setText(appointment.getTreatmentType());
+                dateTimeText.setText(appointment.getAppointmentDate());
+            } else {
+                Toast.makeText(this, "예약 정보를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "예약 정보가 없습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "잘못된 예약 ID입니다.", Toast.LENGTH_SHORT).show();
         }
 
-        // 닫기 버튼 클릭 시
+        // 취소 버튼 클릭 시
         closeButton.setOnClickListener(view -> finish());
     }
 }
