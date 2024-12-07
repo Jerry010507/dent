@@ -16,7 +16,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="10dp"
 
         android:orientation="vertical">
 
@@ -29,33 +29,5 @@
 
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#FFFFFF"
-        android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/modify_appointment_button"
-            android:layout_width="0dp"
-            android:layout_height="123dp"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:background="#BAE7FF"
-            android:text="예약변경"
-            android:textColor="#393939"
-            android:textSize="120px" />
-
-        <Button
-            android:id="@+id/delete_appointment_button"
-            android:layout_width="0dp"
-            android:layout_height="123dp"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:background="#BAE7FF"
-            android:text="예약취소"
-            android:textColor="#393939"
-            android:textSize="120px" />
-    </LinearLayout>
 </LinearLayout>

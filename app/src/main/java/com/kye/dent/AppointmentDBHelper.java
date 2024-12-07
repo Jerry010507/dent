@@ -125,7 +125,7 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(TABLE_APPOINTMENT, null,
                 COLUMN_PHONE + " = ?", new String[]{phone},
-                null, null, COLUMN_APPOINTMENT_DATE + " ASC");
+                null, null, COLUMN_APPOINTMENT_DATE + " DESC");
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -142,6 +142,7 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
             }
             cursor.close();
         }
+        db.close();
         return appointments;
     }
 }
