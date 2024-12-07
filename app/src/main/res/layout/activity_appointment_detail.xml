@@ -127,13 +127,13 @@
         android:layout_gravity="center">
 
         <Button
-            android:id="@+id/check_appointment_button"
+            android:id="@+id/modify_appointment_button"
             android:layout_width="0dp"
             android:layout_height="123dp"
             android:layout_margin="30dp"
             android:layout_weight="1"
             android:background="#BAE7FF"
-            android:text="메뉴이동"
+            android:text="예약 변경"
             android:textColor="#393939"
             android:textSize="120px" />
 

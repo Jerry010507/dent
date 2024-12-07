@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -46,8 +47,8 @@ public class AppointmentActivity extends AppCompatActivity {
 
         // 로그인 여부 확인
         if (isLoggedIn) {
-            String name = sharedPreferences.getString("name", "");    // 이름 가져오기
-            String birth = sharedPreferences.getString("birth", "");  // 생년월일 가져오기
+            String name = sharedPreferences.getString("name", "");
+            String birth = sharedPreferences.getString("birth", "");
             String phone = sharedPreferences.getString("phone", "");
 
             // 사용자 정보 TextView에 설정
@@ -62,7 +63,7 @@ public class AppointmentActivity extends AppCompatActivity {
             finish();
         }
 
-        // 스피너 설정 (카테고리, 년, 월, 일, 시, 분)
+        // 스피너 설정
         setupSpinners();
 
         // 예약 버튼 클릭 리스너
@@ -115,9 +116,6 @@ public class AppointmentActivity extends AppCompatActivity {
         ArrayAdapter<CharSequence> minuteAdapter = ArrayAdapter.createFromResource(this, R.array.minutes, R.layout.spinner_item);
         minuteAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         minuteSpinner.setAdapter(minuteAdapter);
-
-        // 월, 일, 시, 분 스피너 설정 (기존 코드와 동일)
-        // 생략 가능하지만 위와 같은 패턴으로 각 스피너 설정 필요
     }
 
     // 예약 정보 저장 메서드
@@ -142,20 +140,30 @@ public class AppointmentActivity extends AppCompatActivity {
         values.put(dbHelper.COLUMN_BIRTH_DATE, birth);
         values.put(dbHelper.COLUMN_PHONE, phone);
         values.put(dbHelper.COLUMN_TREATMENT_TYPE, category);
-        values.put(dbHelper.COLUMN_APPOINTMENT_DATE, date+" "+time);
-        // 데이터 삽입 시도
-        long rowId = db.insert(dbHelper.TABLE_APPOINTMENT, null, values);
-        db.close();
+        values.put(dbHelper.COLUMN_APPOINTMENT_DATE, date + " " + time);
 
-        // 결과 확인
+        long rowId = db.insert(dbHelper.TABLE_APPOINTMENT, null, values);
+
         if (rowId != -1) {
-            Toast.makeText(this, "예약이 완료되었습니다.", Toast.LENGTH_SHORT).show();
-            // 상세 화면으로 이동
-            Intent intent = new Intent(getApplicationContext(), AppointmentDetailActivity.class);
-            startActivity(intent);
-            finish();  // 현재 Activity 종료
+            db.close();  // 삽입 후에 닫기
+
+            AppointmentDTO appointment = new AppointmentDTO(name, birth, phone, date + " " + time, category);
+            long appointId = dbHelper.addAppointment(appointment);
+
+            if (appointId != -1) {
+                Log.d("RESERVATION", "예약 성공, appointId: " + appointId);
+                Toast.makeText(this, "예약이 완료되었습니다.", Toast.LENGTH_SHORT).show();
+
+                // 상세 예약 화면으로 이동
+                Intent intent = new Intent(this, AppointmentDetailActivity.class);
+                intent.putExtra("appointId", (int) appointId);
+                startActivity(intent);
+            } else {
+                Toast.makeText(this, "예약 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
         } else {
-            Toast.makeText(this, "예약 실패, 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            db.close();
+            Toast.makeText(this, "데이터베이스에 예약을 삽입하는 데 실패했습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 }
