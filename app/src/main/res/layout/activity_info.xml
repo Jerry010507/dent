@@ -77,34 +77,4 @@
         </LinearLayout>
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#FFFFFF"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/logout_button"
-            android:layout_width="0dp"
-            android:layout_height="123dp"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:background="#BAE7FF"
-            android:text="로그아웃"
-            android:textColor="#393939"
-            android:textSize="120px" />
-
-        <Button
-            android:id="@+id/change_personal_info_button"
-            android:layout_width="0dp"
-            android:layout_height="123dp"
-            android:layout_margin="30dp"
-            android:layout_weight="1"
-            android:background="#BAE7FF"
-            android:text="정보수정"
-            android:textColor="#393939"
-            android:textSize="120px" />
-    </LinearLayout>
 </LinearLayout>

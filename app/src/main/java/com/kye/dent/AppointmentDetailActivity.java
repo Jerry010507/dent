@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AppointmentDetailActivity extends AppCompatActivity {
 
     private TextView nameText, birthText, phoneText, typeText, dateTimeText;
-    private Button closeButton, cancelButton;
+    private Button modifyButton, cancelButton;
     private AppointmentDBHelper dbHelper;
     private int appointId;  // 예약 ID를 저장할 변수
 
@@ -27,6 +27,7 @@ public class AppointmentDetailActivity extends AppCompatActivity {
         phoneText = findViewById(R.id.phone);
         typeText = findViewById(R.id.type);
         dateTimeText = findViewById(R.id.date);
+        modifyButton = findViewById(R.id.modify_appointment_button);
         cancelButton = findViewById(R.id.cancel_appointment_button);
 
         dbHelper = new AppointmentDBHelper(this);
@@ -54,7 +55,11 @@ public class AppointmentDetailActivity extends AppCompatActivity {
 
         // 취소 버튼 클릭 시 예약 취소 메서드 호출
         cancelButton.setOnClickListener(view -> cancelAppointment());
+
+        // 수정 버튼 클릭 시 예약
+        modifyButton.setOnClickListener(view -> openModifyActivity());
     }
+
 
     // 예약 취소 메서드
     private void cancelAppointment() {
@@ -79,4 +84,12 @@ public class AppointmentDetailActivity extends AppCompatActivity {
             Toast.makeText(this, "잘못된 예약 ID입니다.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // 예약 변경 화면으로 이동하는 메서드
+    private void openModifyActivity() {
+        Intent intent = new Intent(this, AppointmentModifyActivity.class);
+        intent.putExtra("appointId", appointId);
+        startActivity(intent);
+    }
+
 }

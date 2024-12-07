@@ -145,4 +145,17 @@ public class AppointmentDBHelper extends SQLiteOpenHelper {
         db.close();
         return appointments;
     }
+
+    // 예약 정보를 수정하는 메서드 (name, birthDate, phone 제외)
+    public int updateAppointment(int appointId, String newAppointmentDate, String newTreatmentType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_APPOINTMENT_DATE, newAppointmentDate);
+        values.put(COLUMN_TREATMENT_TYPE, newTreatmentType);
+
+        // WHERE 절: appointId가 일치하는 행만 업데이트
+        int rowsAffected = db.update(TABLE_APPOINTMENT, values, COLUMN_APPOINT_ID + " = ?", new String[]{String.valueOf(appointId)});
+        db.close();
+        return rowsAffected;
+    }
 }

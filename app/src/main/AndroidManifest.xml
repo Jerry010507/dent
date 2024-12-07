@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dent"
         tools:targetApi="31" >
+        <activity android:name=".AppointmentModifyActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".TreatmentListActivity" />
         <activity android:name=".AppointmentDetailActivity" />
