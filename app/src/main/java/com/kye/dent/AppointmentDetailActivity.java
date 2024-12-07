@@ -1,6 +1,7 @@
 package com.kye.dent;
 
-import android.database.Cursor;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -8,11 +9,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AppointmentDetailActivity extends AppointmentActivity {
+public class AppointmentDetailActivity extends AppCompatActivity {
 
     private TextView nameText, birthText, phoneText, typeText, dateTimeText;
-    private Button closeButton;
+    private Button closeButton, cancelButton;
     private AppointmentDBHelper dbHelper;
+    private int appointId;  // 예약 ID를 저장할 변수
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +27,12 @@ public class AppointmentDetailActivity extends AppointmentActivity {
         phoneText = findViewById(R.id.phone);
         typeText = findViewById(R.id.type);
         dateTimeText = findViewById(R.id.date);
-        closeButton = findViewById(R.id.cancel_appointment_button);
+        cancelButton = findViewById(R.id.cancel_appointment_button);
 
         dbHelper = new AppointmentDBHelper(this);
 
         // Intent로 전달된 예약 ID 가져오기
-        int appointId = getIntent().getIntExtra("appointId", -1);
+        appointId = getIntent().getIntExtra("appointId", -1);
 
         if (appointId != -1) {
             // DB에서 예약 정보 가져오기
@@ -50,7 +52,31 @@ public class AppointmentDetailActivity extends AppointmentActivity {
             Toast.makeText(this, "잘못된 예약 ID입니다.", Toast.LENGTH_SHORT).show();
         }
 
-        // 취소 버튼 클릭 시
-        closeButton.setOnClickListener(view -> finish());
+        // 취소 버튼 클릭 시 예약 취소 메서드 호출
+        cancelButton.setOnClickListener(view -> cancelAppointment());
+    }
+
+    // 예약 취소 메서드
+    private void cancelAppointment() {
+        if (appointId != -1) {
+            SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+            // 예약 ID를 기준으로 삭제
+            int deletedRows = db.delete(dbHelper.TABLE_APPOINTMENT, dbHelper.COLUMN_APPOINT_ID + " = ?", new String[]{String.valueOf(appointId)});
+
+            db.close();
+
+            if (deletedRows > 0) {
+                Toast.makeText(this, "예약이 취소되었습니다.", Toast.LENGTH_SHORT).show();
+                // 메인 메뉴나 예약 목록 화면으로 이동
+                Intent intent = new Intent(this, MenuActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "예약 취소에 실패했습니다.", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(this, "잘못된 예약 ID입니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
